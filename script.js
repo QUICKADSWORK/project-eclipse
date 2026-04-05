@@ -296,8 +296,59 @@ function render() {
 
 render();
 
+// ===== GOOGLE SHEETS INTEGRATION =====
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx6QyRdu3aYViTrMYxSpgxHKMmqf7fMeAmHdMMfe54K06om0tnJTJaGupYKKPbnJcoS/exec';
+
+function getDeviceInfo() {
+  const ua = navigator.userAgent;
+  let device = 'Desktop';
+  if (/Mobi|Android/i.test(ua)) device = 'Mobile';
+  else if (/Tablet|iPad/i.test(ua)) device = 'Tablet';
+
+  let os = 'Unknown';
+  if (/Windows/i.test(ua)) os = 'Windows';
+  else if (/Mac/i.test(ua)) os = 'MacOS';
+  else if (/Android/i.test(ua)) os = 'Android';
+  else if (/iPhone|iPad/i.test(ua)) os = 'iOS';
+  else if (/Linux/i.test(ua)) os = 'Linux';
+
+  let browser = 'Unknown';
+  if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = 'Chrome';
+  else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+  else if (/Firefox/i.test(ua)) browser = 'Firefox';
+  else if (/Edg/i.test(ua)) browser = 'Edge';
+  else if (/Opera|OPR/i.test(ua)) browser = 'Opera';
+
+  return {
+    device: device,
+    os: os,
+    browser: browser,
+    screen: window.innerWidth + 'x' + window.innerHeight,
+    referrer: document.referrer || 'direct',
+    language: navigator.language || 'unknown'
+  };
+}
+
+function sendToSheet(data) {
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).catch(() => {});
+}
+
 // ===== PAGE NAVIGATION =====
 function showPage(pageId) {
+  // Track "I WANT IN" clicks
+  if (pageId === 'page-briefing') {
+    const info = getDeviceInfo();
+    sendToSheet({
+      type: 'click',
+      ...info
+    });
+  }
+
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const target = document.getElementById(pageId);
   if (target) {
@@ -351,5 +402,23 @@ function handleSubmit() {
   });
 
   if (!allFilled) return;
-  alert('Application submitted! We will review and get back to you.');
+
+  const fields = form.querySelectorAll('input, textarea');
+  const info = getDeviceInfo();
+
+  sendToSheet({
+    type: 'application',
+    name: fields[0].value.trim(),
+    fantasy: fields[1].value.trim(),
+    craziness: fields[2].value.trim(),
+    instagram: fields[3].value.trim(),
+    referral: fields[4].value.trim(),
+    device: info.device,
+    os: info.os,
+    browser: info.browser,
+    screen: info.screen
+  });
+
+  alert('Application submitted! We will review and get back to you. 😈');
+  form.reset();
 }
