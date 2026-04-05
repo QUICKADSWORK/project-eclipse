@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PROJECT ECLIPSE | The Anonymous Interest Survey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="particles"></canvas>
+
+  <!-- ==================== PAGE 1: LANDING ==================== -->
+  <section id="page-landing" class="page active">
+    <div class="landing-content">
+      <div class="logo-container">
+        <div class="logo-glow"></div>
+        <img src="logo.png" alt="Project Eclipse" class="logo" />
+      </div>
+
+      <h1 class="main-title">PROJECT ECLIPSE</h1>
+
+      <p class="tagline">BHUBANESWAR &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; ONE NIGHT ONLY</p>
+      <p class="sub-tagline">AFTER DELHI & BANGALORE — FIRST TIME IN BBSR</p>
+
+      <p class="description">Bhubaneswar has never seen this before. And it won't again.</p>
+      <p class="description-sub">As our last parties, this party will also have <strong>zero records and zero videos</strong>. What happens at Eclipse, stays at Eclipse.</p>
+
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        <span class="live-text"><span id="viewer-count">180</span> PEOPLE VIEWING RIGHT NOW</span>
+      </div>
+
+      <button class="cta-button" onclick="showPage('page-briefing')">I WANT IN 😈</button>
+
+      <p class="contact">CONTACT US: projecteclipsebbsr@gmail.com</p>
+    </div>
+
+    <div class="side-figure left-figure"></div>
+    <div class="side-figure right-figure"></div>
+  </section>
+
+  <!-- ==================== PAGE 2: THE BRIEFING ==================== -->
+  <section id="page-briefing" class="page">
+    <button class="back-button" onclick="showPage('page-landing')">← Back</button>
+    <div class="briefing-content">
+      <div class="logo-container small">
+        <img src="logo.png" alt="Project Eclipse" class="logo logo-small" />
+      </div>
+
+      <p class="section-label">// UNCENSORED EXPERIENCE //</p>
+      <h2 class="section-title">THE BRIEFING 😈</h2>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <h3>🔒 THE LOCKDOWN</h3>
+          <p>Doors open at <strong>7:00 PM</strong>. Locked at <strong>8:00 PM sharp</strong>. The outside world stops existing until <strong>6:00 AM</strong>. No late entries. No exceptions.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>👻 GHOST MODE</h3>
+          <p>Absolute <u>zero-camera policy</u>. No phones allowed inside. What happens at Eclipse stays at Eclipse. <u>Privacy is our main concept.</u></p>
+        </div>
+
+        <div class="info-card">
+          <h3>👥 THE INNER CIRCLE</h3>
+          <p>100% background-checked, fiercely protected guest list. Only <strong>50 wild souls</strong> make the cut. Every single person is verified.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>🍸 LIQUID COURAGE — UNLIMITED PREMIUM BAR</h3>
+          <p>Unlimited premium house bar flowing all night. You can also <strong>make your own drinks & cocktails</strong>. Bring your own stuff if you want.</p>
+          <div class="drink-tags">
+            <span class="tag">Royal Ranthambore</span>
+            <span class="tag">100 Pipers</span>
+            <span class="tag">Black Dog</span>
+            <span class="tag">Red Label</span>
+            <span class="tag">Ballantine's</span>
+            <span class="tag">Absolut Vodka</span>
+            <span class="tag">Bombay Sapphire</span>
+            <span class="tag">Smirnoff</span>
+            <span class="tag">Budweiser Magnum</span>
+            <span class="tag">Corona</span>
+            <span class="tag">Heineken</span>
+            <span class="tag">Mocktails</span>
+          </div>
+          <p class="leaf-note">🍃 You can also bring your own stuff. Cigarette smoking strictly in the designated leaf-marked lounge area.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>🍽️ THE SPREAD</h3>
+          <p><strong>Premium starters</strong> served all night to keep the energy up. This isn't a dinner — it's fuel for the wild.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>🎧 THE SOUNDTRACK</h3>
+          <p>A curated DJ set designed to take the energy from <strong><u>zero to untamed</u></strong>. The beats don't stop till sunrise. Unrestricted music & dancing all night.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>🏰 THE PLAYGROUND</h3>
+          <p>A luxury private villa transformed into a safe, elite space to fully express yourself, shatter your boundaries, and explore your wild side. <strong><u>Always within consent and house rules.</u></strong></p>
+        </div>
+
+        <div class="info-card">
+          <h3>🚫 ZERO TOLERANCE</h3>
+          <p>Extreme VVIP atmosphere with <strong>zero buzzkills</strong>. Strict <strong><u>no-drugs policy</u></strong>. Zero disturbance guaranteed.</p>
+        </div>
+      </div>
+
+      <p class="section-label">// PRICE OF ADMISSION //</p>
+
+      <div class="pricing-row">
+        <div class="price-card">
+          <span class="price-label">MALE STAG</span>
+          <span class="price-amount">₹5,000</span>
+        </div>
+        <div class="price-card">
+          <span class="price-label">FEMALE STAG</span>
+          <span class="price-amount">₹4,000</span>
+        </div>
+      </div>
+
+      <p class="countdown-label">Only 50 spots. <span class="highlight">247 applications</span> received.</p>
+
+      <p class="countdown-title">APPLICATIONS CLOSE IN</p>
+      <div class="countdown-row">
+        <div class="countdown-box">
+          <span id="cd-hrs">00</span>
+          <small>HRS</small>
+        </div>
+        <div class="countdown-box">
+          <span id="cd-min">00</span>
+          <small>MIN</small>
+        </div>
+        <div class="countdown-box">
+          <span id="cd-sec">00</span>
+          <small>SEC</small>
+        </div>
+      </div>
+
+      <button class="cta-button" onclick="showPage('page-survey')">BEGIN APPLICATION 😈</button>
+    </div>
+    <button class="back-button bottom" onclick="showPage('page-landing')">← Back</button>
+  </section>
+
+  <!-- ==================== PAGE 3: SURVEY FORM ==================== -->
+  <section id="page-survey" class="page">
+    <button class="back-button" onclick="showPage('page-briefing')">← Back</button>
+    <div class="survey-content">
+      <h2 class="survey-title">PROJECT ECLIPSE<br/>SURVEY FORM</h2>
+
+      <form id="survey-form" onsubmit="return false;">
+        <div class="form-group">
+          <label>🪪 What is your name?</label>
+          <input type="text" placeholder="Rahul Dua" />
+        </div>
+
+        <div class="form-group">
+          <label>🔥 What is your wild fantasy for this party?</label>
+          <textarea rows="4" placeholder="Want to try all the drinks in one night"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>😈 How crazy are you for this party........?</label>
+          <input type="text" placeholder="I'll be the last one standing at 6 AM" />
+        </div>
+
+        <div class="form-group">
+          <label>📸 Drop your Instagram profile, no email (contact method)</label>
+          <input type="text" placeholder="@rahul_dua" />
+        </div>
+
+        <div class="form-group">
+          <label>🔗 How did you hear about us? / Referral code</label>
+          <input type="text" placeholder="Instagram, friend's referral, word of mouth..." />
+        </div>
+
+        <p class="form-disclaimer">⚠️ Submission of this protocol is mandatory for consideration into the Private Party Survey program. While purely personal details are optional, incomplete profiles rarely make the cut. Your silence is a choice; your transparency is an invitation.</p>
+
+        <button type="button" class="cta-button" onclick="handleSubmit()">CONTINUE 😈</button>
+      </form>
+    </div>
+    <button class="back-button bottom" onclick="showPage('page-briefing')">← Back</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

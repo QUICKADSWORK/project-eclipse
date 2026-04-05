@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="moonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c0c0c0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#808080;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="tigerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a0a0a0;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Crescent Moon -->
+  <g filter="url(#glow)">
+    <path d="M100 15 C60 15, 25 50, 25 100 C25 150, 60 185, 100 185 C70 170, 50 140, 50 100 C50 60, 70 30, 100 15Z"
+      fill="url(#moonGrad)" stroke="#d0d0d0" stroke-width="1.5"/>
+    <!-- Moon decorative swirl -->
+    <path d="M65 60 Q55 80, 65 100 Q75 120, 60 145"
+      fill="none" stroke="#d0d0d0" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="70" cy="75" r="2" fill="#d0d0d0" opacity="0.4"/>
+    <circle cx="58" cy="120" r="1.5" fill="#d0d0d0" opacity="0.4"/>
+  </g>
+  <!-- Tiger Head -->
+  <g filter="url(#glow)" transform="translate(85, 35)">
+    <!-- Tiger face outline -->
+    <path d="M50 0 L65 25 Q80 50, 75 80 Q70 105, 50 115 Q30 105, 25 80 Q20 50, 35 25Z"
+      fill="url(#tigerGrad)" stroke="#c0c0c0" stroke-width="1.2"/>
+    <!-- Left ear -->
+    <path d="M35 25 L25 5 L20 30Z" fill="url(#tigerGrad)" stroke="#c0c0c0" stroke-width="1"/>
+    <!-- Right ear -->
+    <path d="M65 25 L75 5 L80 30Z" fill="url(#tigerGrad)" stroke="#c0c0c0" stroke-width="1"/>
+    <!-- Tiger stripes -->
+    <path d="M40 35 Q45 40, 38 50" fill="none" stroke="#666" stroke-width="1.5" opacity="0.6"/>
+    <path d="M60 35 Q55 40, 62 50" fill="none" stroke="#666" stroke-width="1.5" opacity="0.6"/>
+    <path d="M42 55 Q48 58, 43 65" fill="none" stroke="#666" stroke-width="1.5" opacity="0.5"/>
+    <path d="M58 55 Q52 58, 57 65" fill="none" stroke="#666" stroke-width="1.5" opacity="0.5"/>
+    <!-- Eyes -->
+    <ellipse cx="42" cy="55" rx="5" ry="3" fill="#1a1a2e" stroke="#c0c0c0" stroke-width="0.8"/>
+    <ellipse cx="58" cy="55" rx="5" ry="3" fill="#1a1a2e" stroke="#c0c0c0" stroke-width="0.8"/>
+    <circle cx="43" cy="55" r="1.5" fill="#ff4444"/>
+    <circle cx="59" cy="55" r="1.5" fill="#ff4444"/>
+    <!-- Nose -->
+    <path d="M48 70 L50 73 L52 70Z" fill="#888"/>
+    <!-- Mouth / Fangs -->
+    <path d="M42 78 Q50 90, 58 78" fill="none" stroke="#888" stroke-width="1"/>
+    <path d="M44 78 L42 88" fill="none" stroke="#c0c0c0" stroke-width="1.5"/>
+    <path d="M56 78 L58 88" fill="none" stroke="#c0c0c0" stroke-width="1.5"/>
+    <!-- Whiskers -->
+    <line x1="35" y1="72" x2="15" y2="68" stroke="#c0c0c0" stroke-width="0.8" opacity="0.5"/>
+    <line x1="35" y1="76" x2="15" y2="78" stroke="#c0c0c0" stroke-width="0.8" opacity="0.5"/>
+    <line x1="65" y1="72" x2="85" y2="68" stroke="#c0c0c0" stroke-width="0.8" opacity="0.5"/>
+    <line x1="65" y1="76" x2="85" y2="78" stroke="#c0c0c0" stroke-width="0.8" opacity="0.5"/>
+  </g>
+</svg>
