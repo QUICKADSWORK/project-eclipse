@@ -381,7 +381,7 @@ setInterval(updateAppCount, 8000);
 function updateCountdown() {
   const now = new Date();
   const deadline = new Date();
-  deadline.setDate(now.getDate() + 2);
+  deadline.setDate(now.getDate() + 7);
   deadline.setHours(23, 59, 59, 0);
   const diff = deadline - now;
 
