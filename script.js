@@ -365,6 +365,18 @@ function updateViewerCount() {
 }
 setInterval(updateViewerCount, 3000);
 
+// ===== AUTO-INCREMENT APPLICATION COUNT =====
+let appCount = 247;
+function updateAppCount() {
+  const el = document.getElementById('app-count');
+  if (!el) return;
+  if (Math.random() < 0.4) {
+    appCount += Math.floor(Math.random() * 3) + 1;
+    el.textContent = appCount;
+  }
+}
+setInterval(updateAppCount, 8000);
+
 // ===== COUNTDOWN TIMER =====
 function updateCountdown() {
   const now = new Date();
