@@ -399,87 +399,32 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// ===== PHOTO UPLOAD PREVIEW =====
-let uploadedPhotoBase64 = '';
-
-document.addEventListener('DOMContentLoaded', () => {
-  const photoInput = document.getElementById('photo-input');
-  if (photoInput) {
-    photoInput.addEventListener('change', function () {
-      const file = this.files[0];
-      if (!file) return;
-
-      if (file.size > 5 * 1024 * 1024) {
-        alert('Photo must be under 5 MB. Please choose a smaller file.');
-        this.value = '';
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        uploadedPhotoBase64 = e.target.result;
-        const preview = document.getElementById('photo-preview');
-        const placeholder = document.getElementById('upload-placeholder');
-        preview.src = uploadedPhotoBase64;
-        preview.style.display = 'block';
-        placeholder.style.display = 'none';
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-});
-
 // ===== FORM SUBMISSION =====
 function handleSubmit() {
-  const email = document.getElementById('field-email').value.trim();
-  const phone = document.getElementById('field-phone').value.trim();
-  const instagram = document.getElementById('field-instagram').value.trim();
-
-  const mandatoryFields = [
-    { el: document.getElementById('field-email'), value: email, label: 'Email' },
-    { el: document.getElementById('field-phone'), value: phone, label: 'Phone Number' },
-    { el: document.getElementById('field-instagram'), value: instagram, label: 'Instagram Handle' }
-  ];
-
-  let valid = true;
-  mandatoryFields.forEach(f => {
-    if (!f.value) {
-      valid = false;
-      f.el.style.borderColor = 'rgba(255, 60, 60, 0.6)';
-      f.el.style.boxShadow = '0 0 12px rgba(255, 60, 60, 0.15)';
-      setTimeout(() => {
-        f.el.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-        f.el.style.boxShadow = 'none';
-      }, 2500);
-    }
-  });
-
-  if (!valid) {
-    alert('Email, Phone Number, and Instagram are mandatory to proceed.');
-    return;
-  }
-
   const form = document.getElementById('survey-form');
-  const allInputs = form.querySelectorAll('input:not([type="file"]), textarea');
-  allInputs.forEach(input => {
+  const inputs = form.querySelectorAll('input, textarea');
+  let allFilled = true;
+
+  inputs.forEach(input => {
     if (!input.value.trim()) {
+      allFilled = false;
       input.style.borderColor = 'rgba(255, 60, 60, 0.5)';
       setTimeout(() => { input.style.borderColor = 'rgba(255, 255, 255, 0.12)'; }, 2000);
     }
   });
 
+  if (!allFilled) return;
+
+  const fields = form.querySelectorAll('input, textarea');
   const info = getDeviceInfo();
 
   sendToSheet({
     type: 'application',
-    name: document.getElementById('field-name').value.trim(),
-    fantasy: document.getElementById('field-fantasy').value.trim(),
-    craziness: document.getElementById('field-craziness').value.trim(),
-    email: email,
-    phone: phone,
-    instagram: instagram,
-    photo: uploadedPhotoBase64,
-    referral: document.getElementById('field-referral').value.trim(),
+    name: fields[0].value.trim(),
+    fantasy: fields[1].value.trim(),
+    craziness: fields[2].value.trim(),
+    instagram: fields[3].value.trim(),
+    referral: fields[4].value.trim(),
     device: info.device,
     os: info.os,
     browser: info.browser,
@@ -488,9 +433,4 @@ function handleSubmit() {
 
   alert('Application submitted! We will review and get back to you. 😈');
   form.reset();
-  uploadedPhotoBase64 = '';
-  const preview = document.getElementById('photo-preview');
-  const placeholder = document.getElementById('upload-placeholder');
-  if (preview) { preview.style.display = 'none'; preview.src = ''; }
-  if (placeholder) placeholder.style.display = 'flex';
 }
