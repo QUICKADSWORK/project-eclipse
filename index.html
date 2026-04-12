@@ -125,33 +125,65 @@
     <div class="survey-content">
       <h2 class="survey-title">PROJECT ECLIPSE<br/>SURVEY FORM</h2>
 
+      <div class="serious-warning">
+        <span class="warning-icon">⚠️</span>
+        <p>Apply <strong>ONLY</strong> if you are really serious about this grand wild house party. Otherwise, <strong>don't fill this form</strong>. We don't want unnecessary clutter.</p>
+      </div>
+
       <form id="survey-form" onsubmit="return false;">
         <div class="form-group">
           <label>🪪 What is your name?</label>
-          <input type="text" placeholder="Rahul Dua" />
+          <input type="text" id="field-name" placeholder="Rahul Dua" />
         </div>
 
         <div class="form-group">
           <label>🔥 What is your wild fantasy for this party?</label>
-          <textarea rows="4" placeholder="Want to try all the drinks in one night"></textarea>
+          <textarea id="field-fantasy" rows="4" placeholder="Want to try all the drinks in one night"></textarea>
         </div>
 
         <div class="form-group">
           <label>😈 How crazy are you for this party........?</label>
-          <input type="text" placeholder="I'll be the last one standing at 6 AM" />
+          <input type="text" id="field-craziness" placeholder="I'll be the last one standing at 6 AM" />
         </div>
 
         <div class="form-group">
-          <label>📸 Drop your Instagram profile, no email (contact method)</label>
-          <input type="text" placeholder="@rahul_dua" />
+          <label>📧 Your Email <span class="mandatory-star">*</span></label>
+          <input type="email" id="field-email" placeholder="youremail@gmail.com" required />
+        </div>
+
+        <div class="form-group">
+          <label>📱 Your Phone Number <span class="mandatory-star">*</span></label>
+          <input type="tel" id="field-phone" placeholder="+91 98765 43210" required />
+        </div>
+
+        <div class="form-group">
+          <label>📸 Your Instagram Handle <span class="mandatory-star">*</span></label>
+          <input type="text" id="field-instagram" placeholder="@your_handle" required />
+        </div>
+
+        <div class="form-group">
+          <label>📷 Upload Your Best Pic <span class="upload-hint">(your selection chances improve with a good pic)</span></label>
+          <div class="photo-upload-area" id="photo-upload-area" onclick="document.getElementById('photo-input').click()">
+            <input type="file" id="photo-input" accept="image/*" hidden />
+            <div class="upload-placeholder" id="upload-placeholder">
+              <span class="upload-icon">📤</span>
+              <span>Tap to upload your best photo</span>
+            </div>
+            <img id="photo-preview" class="photo-preview" />
+          </div>
         </div>
 
         <div class="form-group">
           <label>🔗 How did you hear about us? / Referral code</label>
-          <input type="text" placeholder="Instagram, friend's referral, word of mouth..." />
+          <input type="text" id="field-referral" placeholder="Instagram, friend's referral, word of mouth..." />
         </div>
 
-        <p class="form-disclaimer">⚠️ Submission of this protocol is mandatory for consideration into the Private Party Survey program. While purely personal details are optional, incomplete profiles rarely make the cut. Your silence is a choice; your transparency is an invitation.</p>
+        <div class="insta-follow-notice">
+          <span class="follow-icon">📌</span>
+          <p>It is <strong>mandatory</strong> to follow our Instagram page <a href="https://instagram.com/projecteclipsebbsr" target="_blank" rel="noopener">@projecteclipsebbsr</a> on Instagram. <em>We do take all of this very seriously.</em></p>
+        </div>
+
+        <p class="form-disclaimer">⚠️ Submission of this protocol is mandatory for consideration into the Private Party Survey program. Email, Phone & Instagram are mandatory to proceed. Incomplete profiles will not make the cut.</p>
 
         <button type="button" class="cta-button" onclick="handleSubmit()">CONTINUE 😈</button>
       </form>
