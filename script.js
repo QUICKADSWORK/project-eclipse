@@ -399,37 +399,13 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// ===== PHOTO UPLOAD WITH COMPRESSION =====
+// ===== PHOTO UPLOAD PREVIEW =====
 let uploadedPhotoBase64 = '';
-
-function compressImage(file, maxWidth, maxHeight, quality) {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const img = new Image();
-      img.onload = function () {
-        const canvas = document.createElement('canvas');
-        let w = img.width;
-        let h = img.height;
-
-        if (w > maxWidth) { h = h * (maxWidth / w); w = maxWidth; }
-        if (h > maxHeight) { w = w * (maxHeight / h); h = maxHeight; }
-
-        canvas.width = w;
-        canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL('image/jpeg', quality));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
 
 document.addEventListener('DOMContentLoaded', () => {
   const photoInput = document.getElementById('photo-input');
   if (photoInput) {
-    photoInput.addEventListener('change', async function () {
+    photoInput.addEventListener('change', function () {
       const file = this.files[0];
       if (!file) return;
 
@@ -439,13 +415,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const compressed = await compressImage(file, 600, 600, 0.7);
-      uploadedPhotoBase64 = compressed;
-      const preview = document.getElementById('photo-preview');
-      const placeholder = document.getElementById('upload-placeholder');
-      preview.src = compressed;
-      preview.style.display = 'block';
-      placeholder.style.display = 'none';
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        uploadedPhotoBase64 = e.target.result;
+        const preview = document.getElementById('photo-preview');
+        const placeholder = document.getElementById('upload-placeholder');
+        preview.src = uploadedPhotoBase64;
+        preview.style.display = 'block';
+        placeholder.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
     });
   }
 });
