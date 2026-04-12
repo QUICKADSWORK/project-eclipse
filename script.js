@@ -330,11 +330,13 @@ function getDeviceInfo() {
 }
 
 function sendToSheet(data) {
+  const formData = new FormData();
+  formData.append('payload', JSON.stringify(data));
+
   fetch(SHEET_URL, {
     method: 'POST',
     mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
+    body: formData
   }).catch(() => {});
 }
 
