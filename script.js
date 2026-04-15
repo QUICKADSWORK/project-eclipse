@@ -399,38 +399,76 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// ===== FORM SUBMISSION =====
-function handleSubmit() {
-  const form = document.getElementById('survey-form');
-  const inputs = form.querySelectorAll('input, textarea');
-  let allFilled = true;
+// ===== REFERRAL CODE SELECTION =====
+let selectedReferral = '';
 
-  inputs.forEach(input => {
-    if (!input.value.trim()) {
-      allFilled = false;
-      input.style.borderColor = 'rgba(255, 60, 60, 0.5)';
-      setTimeout(() => { input.style.borderColor = 'rgba(255, 255, 255, 0.12)'; }, 2000);
-    }
-  });
+function selectReferral(btn) {
+  document.querySelectorAll('.referral-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedReferral = btn.dataset.code;
 
-  if (!allFilled) return;
+  const paymentSection = document.getElementById('payment-section');
+  if (paymentSection.style.display === 'none') {
+    paymentSection.style.display = 'flex';
+    paymentSection.style.animation = 'fadeInUp 0.6s ease-out';
+    setTimeout(() => {
+      paymentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
 
-  const fields = form.querySelectorAll('input, textarea');
+// ===== FORM VALIDATION + PAY NOW =====
+function highlightField(el) {
+  el.style.borderColor = 'rgba(255, 60, 60, 0.6)';
+  el.style.boxShadow = '0 0 12px rgba(255, 60, 60, 0.15)';
+  setTimeout(() => {
+    el.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+    el.style.boxShadow = 'none';
+  }, 2500);
+}
+
+function handlePayNow() {
+  const name = document.getElementById('field-name').value.trim();
+  const phone = document.getElementById('field-phone').value.trim();
+  const gender = document.querySelector('input[name="gender"]:checked');
+  const email = document.getElementById('field-email').value.trim();
+
+  let valid = true;
+
+  if (!name) { valid = false; highlightField(document.getElementById('field-name')); }
+  if (!phone) { valid = false; highlightField(document.getElementById('field-phone')); }
+  if (!email) { valid = false; highlightField(document.getElementById('field-email')); }
+
+  if (!gender) {
+    valid = false;
+    document.querySelector('.gender-options').style.boxShadow = '0 0 12px rgba(255, 60, 60, 0.2)';
+    setTimeout(() => { document.querySelector('.gender-options').style.boxShadow = 'none'; }, 2500);
+  }
+
+  if (!selectedReferral) {
+    valid = false;
+    alert('Please select a referral code.');
+    return;
+  }
+
+  if (!valid) {
+    alert('Please fill all mandatory fields before proceeding to payment.');
+    return;
+  }
+
   const info = getDeviceInfo();
-
   sendToSheet({
     type: 'application',
-    name: fields[0].value.trim(),
-    fantasy: fields[1].value.trim(),
-    craziness: fields[2].value.trim(),
-    instagram: fields[3].value.trim(),
-    referral: fields[4].value.trim(),
+    name: name,
+    phone: phone,
+    gender: gender.value,
+    email: email,
+    referral: selectedReferral,
     device: info.device,
     os: info.os,
     browser: info.browser,
     screen: info.screen
   });
 
-  alert('Application submitted! We will review and get back to you. 😈');
-  form.reset();
+  window.open('https://growezy.club/the-social-vibes/weekend-house-party-18-04-2026', '_blank');
 }
