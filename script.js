@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input[name="gender"]').forEach(r => r.addEventListener('change', tryShowPayment));
 });
 
-// ===== PAY NOW — validate, send to sheet, then redirect =====
+// ===== PAY NOW — validate then redirect =====
 function handlePayNow() {
   const name = document.getElementById('field-name').value.trim();
   const phone = document.getElementById('field-phone').value.trim();
@@ -449,24 +449,6 @@ function handlePayNow() {
     alert('Please fill all mandatory fields and select a referral code.');
     return false;
   }
-
-  const now = new Date();
-  const timestamp = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-
-  const info = getDeviceInfo();
-  sendToSheet({
-    type: 'application',
-    name: name,
-    phone: phone,
-    gender: gender.value,
-    email: email,
-    referral: selectedReferral,
-    timestamp: timestamp,
-    device: info.device,
-    os: info.os,
-    browser: info.browser,
-    screen: info.screen
-  });
 
   return true;
 }
