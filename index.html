@@ -55,6 +55,11 @@
 
       <div class="info-cards">
         <div class="info-card">
+          <h3>🎟️ THE TICKET</h3>
+          <p>Entry: <strong>₹7,000</strong> per person — Male & Female same price. Includes access to the full night experience. <strong><u>Discount codes available</u></strong> — apply during registration to unlock 50% off.</p>
+        </div>
+
+        <div class="info-card">
           <h3>🔒 THE LOCKDOWN</h3>
           <p>Doors open at <strong>7:00 PM</strong>. Locked at <strong>8:00 PM sharp</strong>. The outside world stops existing until <strong>6:00 AM</strong>. No late entries. No exceptions.</p>
         </div>
@@ -70,8 +75,8 @@
         </div>
 
         <div class="info-card">
-          <h3>🍸 LIQUID COURAGE — PAID PREMIUM BAR</h3>
-          <p>Premium house bar stocked and flowing all night. From whiskeys to vodkas, beers to cocktails — <strong>everything crafted & served at the venue</strong>. No outside drinks allowed.</p>
+          <h3>🍸 LIQUID COURAGE — PREMIUM BAR</h3>
+          <p>Each guest gets <strong>4 pegs (60 ml each)</strong> of premium whiskey or vodka included. Additional drinks available at the venue bar. No outside drinks allowed.</p>
           <p class="leaf-note">🍃 Cigarette smoking strictly in the designated leaf-marked lounge area.</p>
         </div>
 
@@ -86,13 +91,18 @@
         </div>
 
         <div class="info-card">
+          <h3>🎲 WILD GAMES</h3>
+          <p>Curated party games designed to break the ice and push boundaries. Get ready to let loose and have the time of your life. <strong><u>Always within consent.</u></strong></p>
+        </div>
+
+        <div class="info-card">
           <h3>🏰 THE PLAYGROUND</h3>
           <p>A luxury private villa transformed into a safe, elite space to fully express yourself, shatter your boundaries, and explore your wild side. <strong><u>Always within consent and house rules.</u></strong></p>
         </div>
 
         <div class="info-card">
-          <h3>🚫 ZERO TOLERANCE</h3>
-          <p>Extreme VVIP atmosphere with <strong>zero buzzkills</strong>. Strict <strong><u>no-drugs policy</u></strong>. Zero disturbance guaranteed.</p>
+          <h3>⚠️ HOUSE RULES</h3>
+          <p><strong>Consent is everything.</strong> The other person's comfort matters — always. If anyone is found misbehaving, <strong><u>the host has full right to remove you from the party immediately</u></strong>. No warnings. Strict <strong><u>no-drugs policy</u></strong>. Follow the house rules or leave.</p>
         </div>
       </div>
 
@@ -119,41 +129,104 @@
     <button class="back-button bottom" onclick="showPage('page-landing')">← Back</button>
   </section>
 
-  <!-- ==================== PAGE 3: SURVEY FORM ==================== -->
+  <!-- ==================== PAGE 3: REGISTRATION + PAYMENT ==================== -->
   <section id="page-survey" class="page">
     <button class="back-button" onclick="showPage('page-briefing')">← Back</button>
     <div class="survey-content">
-      <h2 class="survey-title">PROJECT ECLIPSE<br/>SURVEY FORM</h2>
+      <h2 class="survey-title">PROJECT ECLIPSE<br/>REGISTRATION</h2>
+
+      <div class="serious-warning">
+        <span class="warning-icon">⚠️</span>
+        <p>Apply <strong>ONLY</strong> if you are really serious about this grand wild house party. Otherwise, <strong>don't fill this form</strong>. We don't want unnecessary clutter.</p>
+      </div>
 
       <form id="survey-form" onsubmit="return false;">
         <div class="form-group">
-          <label>🪪 What is your name?</label>
-          <input type="text" placeholder="Rahul Dua" />
+          <label>🪪 Your Name <span class="mandatory-star">*</span></label>
+          <input type="text" id="field-name" placeholder="Your full name" required />
         </div>
 
         <div class="form-group">
-          <label>🔥 What is your wild fantasy for this party?</label>
-          <textarea rows="4" placeholder="Want to try all the drinks in one night"></textarea>
+          <label>📱 Phone Number <span class="mandatory-star">*</span></label>
+          <input type="tel" id="field-phone" placeholder="+91 98765 43210" required />
         </div>
 
         <div class="form-group">
-          <label>😈 How crazy are you for this party........?</label>
-          <input type="text" placeholder="I'll be the last one standing at 6 AM" />
+          <label>👤 Gender <span class="mandatory-star">*</span></label>
+          <div class="gender-options">
+            <label class="gender-option">
+              <input type="radio" name="gender" value="Male" />
+              <span class="gender-label">Male</span>
+            </label>
+            <label class="gender-option">
+              <input type="radio" name="gender" value="Female" />
+              <span class="gender-label">Female</span>
+            </label>
+            <label class="gender-option">
+              <input type="radio" name="gender" value="Other" />
+              <span class="gender-label">Other</span>
+            </label>
+          </div>
         </div>
 
         <div class="form-group">
-          <label>📸 Drop your Instagram profile, no email (contact method)</label>
-          <input type="text" placeholder="@rahul_dua" />
+          <label>📧 Email ID <span class="mandatory-star">*</span></label>
+          <input type="email" id="field-email" placeholder="youremail@gmail.com" required />
         </div>
 
         <div class="form-group">
-          <label>🔗 How did you hear about us? / Referral code</label>
-          <input type="text" placeholder="Instagram, friend's referral, word of mouth..." />
+          <label>🔗 Select Your Referral Code <span class="mandatory-star">*</span></label>
+          <p class="referral-hint">Select the referral properly so that we can know from where you came to know about us</p>
+          <div class="referral-options" id="referral-options">
+            <button type="button" class="referral-btn" data-code="CS50" onclick="selectReferral(this)">CS50</button>
+            <button type="button" class="referral-btn" data-code="AK50" onclick="selectReferral(this)">AK50</button>
+            <button type="button" class="referral-btn" data-code="INSTA50" onclick="selectReferral(this)">INSTA50</button>
+            <button type="button" class="referral-btn" data-code="REDDIT50" onclick="selectReferral(this)">REDDIT50</button>
+          </div>
         </div>
 
-        <p class="form-disclaimer">⚠️ Submission of this protocol is mandatory for consideration into the Private Party Survey program. While purely personal details are optional, incomplete profiles rarely make the cut. Your silence is a choice; your transparency is an invitation.</p>
+        <!-- QR + Payment section (hidden until referral is selected) -->
+        <div class="payment-section" id="payment-section" style="display: none;">
+          <div class="price-reveal">
+            <p class="congrats-text">🎉 CONGRATS! 50% OFF UNLOCKED</p>
+            <div class="price-display">
+              <span class="price-original">₹7,000</span>
+              <span class="price-arrow">→</span>
+              <span class="price-discounted">₹3,500</span>
+            </div>
+          </div>
 
-        <button type="button" class="cta-button" onclick="handleSubmit()">CONTINUE 😈</button>
+          <div class="qr-section">
+            <p class="qr-label">SCAN QR TO PAY ₹3,500</p>
+            <div class="qr-container">
+              <img src="qr-code.png" alt="UPI QR Code" class="qr-image" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>📸 Upload Payment Screenshot <span class="mandatory-star">*</span></label>
+            <div class="photo-upload-area" id="payment-upload-area" onclick="document.getElementById('payment-input').click()">
+              <input type="file" id="payment-input" accept="image/*" hidden />
+              <div class="upload-placeholder" id="payment-placeholder">
+                <span class="upload-icon">📤</span>
+                <span>Tap to upload payment screenshot</span>
+              </div>
+              <img id="payment-preview" class="photo-preview" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>💳 Paid from UPI ID <span class="mandatory-star">*</span></label>
+            <input type="text" id="field-upi" placeholder="yourname@upi / yourname@paytm" required />
+          </div>
+
+          <div class="verification-notice">
+            <span class="verify-icon">✅</span>
+            <p>After we verify that we have received your payment, we will send you the <strong>event tickets on your email and WhatsApp within 3 hours (max)</strong>.</p>
+          </div>
+
+          <button type="button" class="cta-button" onclick="handleSubmit()">SUBMIT & CONFIRM 😈</button>
+        </div>
       </form>
     </div>
     <button class="back-button bottom" onclick="showPage('page-briefing')">← Back</button>
