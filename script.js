@@ -406,55 +406,52 @@ function selectReferral(btn) {
   document.querySelectorAll('.referral-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   selectedReferral = btn.dataset.code;
+  tryShowPayment();
+}
 
+function areFieldsFilled() {
+  const name = document.getElementById('field-name').value.trim();
+  const phone = document.getElementById('field-phone').value.trim();
+  const gender = document.querySelector('input[name="gender"]:checked');
+  const email = document.getElementById('field-email').value.trim();
+  return name && phone && gender && email && selectedReferral;
+}
+
+function tryShowPayment() {
   const paymentSection = document.getElementById('payment-section');
-  if (paymentSection.style.display === 'none') {
-    paymentSection.style.display = 'flex';
-    paymentSection.style.animation = 'fadeInUp 0.6s ease-out';
-    setTimeout(() => {
-      paymentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+  if (areFieldsFilled()) {
+    if (paymentSection.style.display === 'none') {
+      paymentSection.style.display = 'flex';
+      paymentSection.style.animation = 'fadeInUp 0.6s ease-out';
+      setTimeout(() => {
+        paymentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  } else {
+    paymentSection.style.display = 'none';
   }
 }
 
-// ===== FORM VALIDATION + PAY NOW =====
-function highlightField(el) {
-  el.style.borderColor = 'rgba(255, 60, 60, 0.6)';
-  el.style.boxShadow = '0 0 12px rgba(255, 60, 60, 0.15)';
-  setTimeout(() => {
-    el.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-    el.style.boxShadow = 'none';
-  }, 2500);
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const formFields = document.querySelectorAll('#field-name, #field-phone, #field-email');
+  formFields.forEach(f => f.addEventListener('input', tryShowPayment));
+  document.querySelectorAll('input[name="gender"]').forEach(r => r.addEventListener('change', tryShowPayment));
+});
 
+// ===== PAY NOW — validate, send to sheet, then redirect =====
 function handlePayNow() {
   const name = document.getElementById('field-name').value.trim();
   const phone = document.getElementById('field-phone').value.trim();
   const gender = document.querySelector('input[name="gender"]:checked');
   const email = document.getElementById('field-email').value.trim();
 
-  let valid = true;
-
-  if (!name) { valid = false; highlightField(document.getElementById('field-name')); }
-  if (!phone) { valid = false; highlightField(document.getElementById('field-phone')); }
-  if (!email) { valid = false; highlightField(document.getElementById('field-email')); }
-
-  if (!gender) {
-    valid = false;
-    document.querySelector('.gender-options').style.boxShadow = '0 0 12px rgba(255, 60, 60, 0.2)';
-    setTimeout(() => { document.querySelector('.gender-options').style.boxShadow = 'none'; }, 2500);
+  if (!name || !phone || !gender || !email || !selectedReferral) {
+    alert('Please fill all mandatory fields and select a referral code.');
+    return false;
   }
 
-  if (!selectedReferral) {
-    valid = false;
-    alert('Please select a referral code.');
-    return;
-  }
-
-  if (!valid) {
-    alert('Please fill all mandatory fields before proceeding to payment.');
-    return;
-  }
+  const now = new Date();
+  const timestamp = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
   const info = getDeviceInfo();
   sendToSheet({
@@ -464,11 +461,12 @@ function handlePayNow() {
     gender: gender.value,
     email: email,
     referral: selectedReferral,
+    timestamp: timestamp,
     device: info.device,
     os: info.os,
     browser: info.browser,
     screen: info.screen
   });
 
-  window.open('https://growezy.club/the-social-vibes/weekend-house-party-18-04-2026', '_blank');
+  return true;
 }
