@@ -925,6 +925,80 @@ body {
   color: #4dff88;
 }
 
+/* Confirmation Checkbox */
+.confirm-checkbox-area {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid rgba(255, 200, 50, 0.25);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 200, 50, 0.06) 0%, rgba(200, 150, 30, 0.03) 100%);
+}
+
+.confirm-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.confirm-checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  margin-top: 2px;
+}
+
+.confirm-checkbox-label input[type="checkbox"]:checked + .custom-checkbox {
+  border-color: #4dff88;
+  background: rgba(77, 255, 136, 0.15);
+}
+
+.confirm-checkbox-label input[type="checkbox"]:checked + .custom-checkbox::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #4dff88;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.confirm-text {
+  font-size: 0.82rem;
+  color: #ddd;
+  line-height: 1.6;
+}
+
+.confirm-warning {
+  margin-top: 10px;
+  padding-left: 34px;
+}
+
+.confirm-warning strong {
+  font-size: 0.78rem;
+  color: #ff7070;
+  line-height: 1.5;
+}
+
+/* Disabled Pay Button */
+.pay-button.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .side-figure {

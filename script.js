@@ -438,17 +438,50 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input[name="gender"]').forEach(r => r.addEventListener('change', tryShowPayment));
 });
 
+// ===== CONFIRMATION CHECKBOX — send data to sheet =====
+let dataSentToSheet = false;
+
+function handleConfirmCheck(checkbox) {
+  const payLink = document.getElementById('pay-link');
+
+  if (checkbox.checked) {
+    payLink.classList.remove('disabled');
+
+    if (!dataSentToSheet) {
+      const name = document.getElementById('field-name').value.trim();
+      const phone = document.getElementById('field-phone').value.trim();
+      const gender = document.querySelector('input[name="gender"]:checked');
+      const email = document.getElementById('field-email').value.trim();
+      const now = new Date();
+      const timestamp = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+      const info = getDeviceInfo();
+
+      sendToSheet({
+        type: 'application',
+        name: name,
+        phone: phone,
+        gender: gender ? gender.value : '',
+        email: email,
+        referral: selectedReferral,
+        timestamp: timestamp,
+        device: info.device,
+        os: info.os,
+        browser: info.browser,
+        screen: info.screen
+      });
+      dataSentToSheet = true;
+    }
+  } else {
+    payLink.classList.add('disabled');
+  }
+}
+
 // ===== PAY NOW — validate then redirect =====
 function handlePayNow() {
-  const name = document.getElementById('field-name').value.trim();
-  const phone = document.getElementById('field-phone').value.trim();
-  const gender = document.querySelector('input[name="gender"]:checked');
-  const email = document.getElementById('field-email').value.trim();
-
-  if (!name || !phone || !gender || !email || !selectedReferral) {
-    alert('Please fill all mandatory fields and select a referral code.');
+  const checkbox = document.getElementById('confirm-checkbox');
+  if (!checkbox.checked) {
+    alert('Please tick the confirmation checkbox before proceeding to payment.');
     return false;
   }
-
   return true;
 }

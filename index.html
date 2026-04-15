@@ -192,7 +192,16 @@
             <p class="price-gst">+ GST applicable</p>
           </div>
 
-          <a href="https://growezy.club/the-social-vibes/weekend-house-party-18-04-2026" target="_blank" rel="noopener" class="cta-button pay-button" id="pay-link" onclick="return handlePayNow()">PAY NOW ₹3,499/- 😈</a>
+          <div class="confirm-checkbox-area">
+            <label class="confirm-checkbox-label">
+              <input type="checkbox" id="confirm-checkbox" onchange="handleConfirmCheck(this)" />
+              <span class="custom-checkbox"></span>
+              <span class="confirm-text">I have read all the details clearly and I am sure that I will proceed with payment.</span>
+            </label>
+            <p class="confirm-warning"><strong>If you are not sure of making the payment, please don't tick this checkbox.</strong></p>
+          </div>
+
+          <a href="https://growezy.club/the-social-vibes/weekend-house-party-18-04-2026" target="_blank" rel="noopener" class="cta-button pay-button disabled" id="pay-link" onclick="return handlePayNow()">PAY NOW ₹3,499/- 😈</a>
 
           <div class="verification-notice">
             <span class="verify-icon">✅</span>
