@@ -330,13 +330,11 @@ function getDeviceInfo() {
 }
 
 function sendToSheet(data) {
-  const formData = new FormData();
-  formData.append('payload', JSON.stringify(data));
-
   fetch(SHEET_URL, {
     method: 'POST',
     mode: 'no-cors',
-    body: formData
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
   }).catch(() => {});
 }
 
@@ -401,143 +399,38 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// ===== IMAGE COMPRESSION =====
-let paymentScreenshotBase64 = '';
-
-function compressImage(file, maxWidth, maxHeight, quality) {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const img = new Image();
-      img.onload = function () {
-        const canvas = document.createElement('canvas');
-        let w = img.width;
-        let h = img.height;
-        if (w > maxWidth) { h = h * (maxWidth / w); w = maxWidth; }
-        if (h > maxHeight) { w = w * (maxHeight / h); h = maxHeight; }
-        canvas.width = w;
-        canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL('image/jpeg', quality));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const paymentInput = document.getElementById('payment-input');
-  if (paymentInput) {
-    paymentInput.addEventListener('change', async function () {
-      const file = this.files[0];
-      if (!file) return;
-      if (file.size > 5 * 1024 * 1024) {
-        alert('Screenshot must be under 5 MB.');
-        this.value = '';
-        return;
-      }
-      const compressed = await compressImage(file, 800, 800, 0.7);
-      paymentScreenshotBase64 = compressed;
-      const preview = document.getElementById('payment-preview');
-      const placeholder = document.getElementById('payment-placeholder');
-      preview.src = compressed;
-      preview.style.display = 'block';
-      placeholder.style.display = 'none';
-    });
-  }
-});
-
-// ===== REFERRAL CODE SELECTION =====
-let selectedReferral = '';
-
-function selectReferral(btn) {
-  document.querySelectorAll('.referral-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  selectedReferral = btn.dataset.code;
-
-  const paymentSection = document.getElementById('payment-section');
-  if (paymentSection.style.display === 'none') {
-    paymentSection.style.display = 'flex';
-    paymentSection.style.animation = 'fadeInUp 0.6s ease-out';
-    setTimeout(() => {
-      paymentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  }
-}
-
 // ===== FORM SUBMISSION =====
-function highlightField(el) {
-  el.style.borderColor = 'rgba(255, 60, 60, 0.6)';
-  el.style.boxShadow = '0 0 12px rgba(255, 60, 60, 0.15)';
-  setTimeout(() => {
-    el.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-    el.style.boxShadow = 'none';
-  }, 2500);
-}
-
 function handleSubmit() {
-  const name = document.getElementById('field-name').value.trim();
-  const phone = document.getElementById('field-phone').value.trim();
-  const gender = document.querySelector('input[name="gender"]:checked');
-  const email = document.getElementById('field-email').value.trim();
-  const upi = document.getElementById('field-upi').value.trim();
+  const form = document.getElementById('survey-form');
+  const inputs = form.querySelectorAll('input, textarea');
+  let allFilled = true;
 
-  let valid = true;
+  inputs.forEach(input => {
+    if (!input.value.trim()) {
+      allFilled = false;
+      input.style.borderColor = 'rgba(255, 60, 60, 0.5)';
+      setTimeout(() => { input.style.borderColor = 'rgba(255, 255, 255, 0.12)'; }, 2000);
+    }
+  });
 
-  if (!name) { valid = false; highlightField(document.getElementById('field-name')); }
-  if (!phone) { valid = false; highlightField(document.getElementById('field-phone')); }
-  if (!email) { valid = false; highlightField(document.getElementById('field-email')); }
-  if (!upi) { valid = false; highlightField(document.getElementById('field-upi')); }
+  if (!allFilled) return;
 
-  if (!gender) {
-    valid = false;
-    document.querySelector('.gender-options').style.boxShadow = '0 0 12px rgba(255, 60, 60, 0.2)';
-    setTimeout(() => { document.querySelector('.gender-options').style.boxShadow = 'none'; }, 2500);
-  }
-
-  if (!selectedReferral) {
-    valid = false;
-    alert('Please select a referral code.');
-    return;
-  }
-
-  if (!paymentScreenshotBase64) {
-    valid = false;
-    alert('Please upload your payment screenshot.');
-    return;
-  }
-
-  if (!valid) {
-    alert('Please fill all mandatory fields.');
-    return;
-  }
-
+  const fields = form.querySelectorAll('input, textarea');
   const info = getDeviceInfo();
 
   sendToSheet({
     type: 'application',
-    name: name,
-    phone: phone,
-    gender: gender.value,
-    email: email,
-    referral: selectedReferral,
-    upi_id: upi,
-    payment_screenshot: paymentScreenshotBase64,
+    name: fields[0].value.trim(),
+    fantasy: fields[1].value.trim(),
+    craziness: fields[2].value.trim(),
+    instagram: fields[3].value.trim(),
+    referral: fields[4].value.trim(),
     device: info.device,
     os: info.os,
     browser: info.browser,
     screen: info.screen
   });
 
-  alert('Registration submitted! We will verify your payment and send event tickets to your email & WhatsApp within 3 hours. 😈');
-  document.getElementById('survey-form').reset();
-  paymentScreenshotBase64 = '';
-  selectedReferral = '';
-  document.querySelectorAll('.referral-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('payment-section').style.display = 'none';
-  const preview = document.getElementById('payment-preview');
-  const placeholder = document.getElementById('payment-placeholder');
-  if (preview) { preview.style.display = 'none'; preview.src = ''; }
-  if (placeholder) placeholder.style.display = 'flex';
+  alert('Application submitted! We will review and get back to you. 😈');
+  form.reset();
 }
